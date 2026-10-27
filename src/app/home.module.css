@@ -1,0 +1,844 @@
+.page {
+  --home-signal: #ff6846;
+  position: relative;
+  overflow: clip;
+  color: #f4f1e8;
+  background: linear-gradient(180deg, rgb(8 9 8 / 18%) 0%, rgb(8 9 8 / 82%) 24%, #080908 58%);
+}
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(34rem, 1.1fr);
+  align-items: center;
+  min-height: 100dvh;
+  padding: var(--nav-height) var(--page-pad) 2rem;
+  isolation: isolate;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: var(--nav-height) var(--page-pad) 2rem;
+  border: 1px solid rgb(255 255 255 / 13%);
+  clip-path: polygon(0 0, 38% 0, 38% 1px, 100% 1px, 100% 100%, 65% 100%, 65% calc(100% - 1px), 0 calc(100% - 1px));
+  pointer-events: none;
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 5;
+  align-self: center;
+  max-width: 49rem;
+  padding-left: clamp(0rem, 4vw, 4.5rem);
+}
+
+.eyebrow {
+  margin: 0 0 clamp(1.2rem, 3vh, 2.2rem);
+  color: var(--home-signal);
+  font: 700 0.64rem/1 var(--font-mono);
+  letter-spacing: 0.12em;
+}
+
+.heroCopy h1 {
+  display: grid;
+  margin: 0;
+  font: 820 clamp(4.2rem, 9.1vw, 6rem)/0.82 var(--font-display);
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.heroCopy h1 span:first-child {
+  color: transparent;
+  -webkit-text-stroke: 1px #f4f1e8;
+  text-stroke: 1px #f4f1e8;
+}
+
+.heroCopy h1 span:last-child {
+  color: #f4f1e8;
+}
+
+.lede {
+  max-width: 29rem;
+  margin: clamp(1.5rem, 3vh, 2.4rem) 0 0;
+  color: rgb(244 241 232 / 72%);
+  font-size: clamp(0.9rem, 1.25vw, 1.12rem);
+  line-height: 1.65;
+}
+
+.actions {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  margin-top: clamp(1.5rem, 3vh, 2.4rem);
+}
+
+.primaryAction,
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3.15rem;
+  white-space: nowrap;
+  font: 720 0.72rem/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: transform 280ms cubic-bezier(.16, 1, .3, 1), color 240ms ease, background 240ms ease;
+}
+
+.primaryAction {
+  gap: 2.8rem;
+  min-width: 12.4rem;
+  padding: 0 1rem;
+  color: #090a08;
+  background: var(--home-signal);
+}
+
+.primaryAction span {
+  font-size: 1rem;
+}
+
+.secondaryAction {
+  padding: 0 0.8rem;
+  border-bottom: 1px solid rgb(244 241 232 / 42%);
+}
+
+.primaryAction:hover,
+.secondaryAction:hover {
+  transform: translateY(-3px);
+}
+
+.primaryAction:active,
+.secondaryAction:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.portalField {
+  --field-rotate-y: 0deg;
+  --scroll-rotate: 0deg;
+  --scroll-y: 0%;
+  --gesture-x: 0px;
+  --gesture-y: 0px;
+  --gesture-rotate: 0deg;
+  --gesture-scale: 1;
+  position: relative;
+  z-index: 3;
+  width: min(55vw, 47rem);
+  aspect-ratio: 1;
+  justify-self: end;
+  perspective: 1100px;
+  pointer-events: none;
+  touch-action: pan-y pinch-zoom;
+  transform:
+    translate3d(var(--gesture-x), calc(var(--scroll-y) + var(--gesture-y)), 0)
+    rotateY(var(--field-rotate-y))
+    rotateZ(calc(var(--scroll-rotate) + var(--gesture-rotate)))
+    scale(var(--gesture-scale));
+  transform-style: preserve-3d;
+}
+
+.portalField[data-dragging="true"] {
+  user-select: none;
+  will-change: transform;
+}
+
+.portalField[data-dragging="true"] .portalNode {
+  transition-duration: 120ms;
+}
+
+.portalField[data-reduced-motion="true"] .orbitDisc i,
+.portalField[data-reduced-motion="true"] .identityCore::before,
+.portalField[data-reduced-motion="true"] .portalOrb::after {
+  animation: none;
+}
+
+.gesturePlane {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+  transform: translateZ(-120px);
+}
+
+.orbitDisc,
+.orbitDisc i,
+.identityCore {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.orbitDisc {
+  inset: 11%;
+  pointer-events: none;
+  border: 1px solid rgb(255 255 255 / 21%);
+  transform: rotateX(66deg) rotateZ(-17deg);
+  transform-style: preserve-3d;
+}
+
+.orbitDisc::before,
+.orbitDisc::after,
+.orbitDisc i {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 50%;
+}
+
+.orbitDisc::after {
+  inset: 30%;
+  border-color: rgb(255 104 70 / 52%);
+}
+
+.orbitDisc i:nth-child(1) {
+  inset: -8%;
+  border-style: dashed;
+  animation: orbitSpin 22s linear infinite;
+}
+
+.orbitDisc i:nth-child(2) {
+  inset: 21%;
+  border-color: rgb(182 255 60 / 38%);
+}
+
+.orbitDisc i:nth-child(3) {
+  inset: 42%;
+  border: 0;
+  background: rgb(255 104 70 / 32%);
+  filter: blur(24px);
+}
+
+.identityCore {
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: clamp(7rem, 13vw, 12rem);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) translateZ(90px);
+  border: 1px solid rgb(255 255 255 / 32%);
+  background: rgb(8 9 8 / 56%);
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 0 1rem rgb(255 255 255 / 2%);
+  pointer-events: none;
+}
+
+.identityCore::before,
+.identityCore::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.identityCore::before {
+  inset: -1.25rem;
+  border: 1px dashed rgb(255 104 70 / 64%);
+  animation: orbitSpin 15s linear infinite reverse;
+}
+
+.identityCore::after {
+  inset: 24%;
+  background: var(--home-signal);
+  filter: blur(22px);
+  opacity: 0.44;
+}
+
+.identityCore span {
+  position: relative;
+  z-index: 1;
+  font: 820 clamp(1.8rem, 4vw, 4.4rem)/1 var(--font-display);
+  letter-spacing: -0.04em;
+}
+
+.portalNode {
+  --node-color: #ff6846;
+  --node-scale: 1;
+  position: absolute;
+  top: var(--portal-y);
+  left: var(--portal-x);
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0.55rem;
+  align-items: center;
+  min-width: 9rem;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) translateZ(var(--portal-z)) scale(var(--node-scale));
+  transform-style: preserve-3d;
+  transition: transform 420ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.portalNode:nth-of-type(3n + 1) {
+  --node-color: #b6ff3c;
+}
+
+.portalNode:nth-of-type(3n + 2) {
+  --node-color: #78d7ff;
+}
+
+.portalNode:hover,
+.portalNode:focus-visible {
+  --node-scale: 1.12;
+  transform: translate(-50%, -50%) translateZ(calc(var(--portal-z) + 70px)) scale(var(--node-scale));
+}
+
+.portalOrb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: clamp(2.35rem, 4vw, 3.8rem);
+  aspect-ratio: 1;
+  border: 1px solid var(--node-color);
+  border-radius: 50%;
+  color: var(--node-color);
+  box-shadow: inset 0 0 1.4rem rgb(255 255 255 / 6%);
+}
+
+.portalOrb::before,
+.portalOrb::after,
+.portalOrb i {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.portalOrb::before {
+  inset: 22%;
+  background: currentColor;
+  box-shadow: 0 0 1.2rem currentColor;
+  opacity: 0.76;
+}
+
+.portalOrb::after {
+  inset: -0.34rem;
+  border: 1px dashed currentColor;
+  opacity: 0.42;
+  animation: orbitSpin 8s linear infinite;
+}
+
+.portalOrb i {
+  width: 0.34rem;
+  height: 0.34rem;
+  transform: translate(1.3rem, -0.6rem);
+  background: currentColor;
+}
+
+.portalLabel {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0.15rem 0.4rem;
+  align-items: baseline;
+  min-width: 6rem;
+}
+
+.portalLabel small,
+.portalLabel em {
+  color: rgb(244 241 232 / 55%);
+  font: 600 0.5rem/1 var(--font-mono);
+  font-style: normal;
+}
+
+.portalLabel strong {
+  font: 700 0.76rem/1.1 var(--font-sans);
+}
+
+.portalLabel em {
+  grid-column: 2;
+}
+
+.heroFacts {
+  position: absolute;
+  z-index: 5;
+  right: calc(var(--page-pad) + 1.4rem);
+  bottom: 2.8rem;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: clamp(1.2rem, 3vw, 3.5rem);
+}
+
+.heroFacts div {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0.45rem;
+  align-items: end;
+}
+
+.heroFacts b {
+  font: 500 clamp(1.55rem, 2.6vw, 2.9rem)/0.8 var(--font-display);
+  letter-spacing: -0.04em;
+}
+
+.heroFacts span {
+  max-width: 5.5rem;
+  color: rgb(244 241 232 / 58%);
+  font: 600 0.5rem/1.25 var(--font-mono);
+}
+
+.statements {
+  position: relative;
+  padding: 0 var(--page-pad);
+  background: #080908;
+}
+
+.statement {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: 0.18fr 0.82fr;
+  grid-template-rows: auto 1fr auto;
+  gap: 1.5rem;
+  align-content: center;
+  min-height: 100dvh;
+  padding: clamp(5rem, 12vh, 9rem) clamp(1.1rem, 5vw, 6rem);
+  transform-origin: center top;
+  background: #111310;
+}
+
+.statement:nth-child(2) {
+  color: #11130f;
+  background: #d7ff52;
+}
+
+.statement:nth-child(3) {
+  color: #f4f1e8;
+  background: #9f351f;
+}
+
+.statementIndex {
+  grid-row: 1 / 4;
+  font: 780 clamp(5rem, 13vw, 15rem)/0.7 var(--font-display);
+  letter-spacing: -0.04em;
+  opacity: 0.18;
+}
+
+.statement > p {
+  max-width: 35rem;
+  margin: 0;
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+}
+
+.statement h2 {
+  align-self: center;
+  margin: 0;
+  font: 800 clamp(3.4rem, 8.7vw, 6rem)/0.9 var(--font-display);
+  letter-spacing: -0.04em;
+}
+
+.statementNote {
+  max-width: 34rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid currentColor;
+  font-size: 0.86rem;
+  line-height: 1.65;
+  opacity: 0.85;
+}
+
+.evidence {
+  min-height: 150dvh;
+  padding: 22vh 0;
+  overflow: hidden;
+  color: #0b100d;
+  background: #8fe0e6;
+}
+
+.evidenceTrack {
+  display: flex;
+  gap: clamp(1rem, 3vw, 3rem);
+  width: max-content;
+  padding: 0 7vw;
+}
+
+.projectSpecimen {
+  display: grid;
+  grid-template-rows: minmax(24rem, 58vh) auto;
+  width: min(72vw, 64rem);
+  min-width: 42rem;
+}
+
+.specimenVisual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgb(11 16 13 / 55%);
+  background: #10271f;
+  isolation: isolate;
+}
+
+.specimenVisual::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 8%;
+  border: 1px solid rgb(143 224 230 / 52%);
+  transform: perspective(700px) rotateX(58deg) rotateZ(-22deg);
+  background:
+    linear-gradient(105deg, transparent 12%, rgb(143 224 230 / 19%) 48%, transparent 76%),
+    radial-gradient(circle at 70% 28%, rgb(255 255 255 / 22%), transparent 24%);
+}
+
+.specimenVisual::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  width: 34%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #9cff00;
+  filter: blur(28px);
+  opacity: 0.55;
+}
+
+.specimenImage {
+  z-index: 0;
+  object-fit: cover;
+  filter: saturate(0.92) contrast(1.06);
+}
+
+.specimenVisual[data-variant="1"] {
+  background: #222a66;
+}
+
+.specimenVisual[data-variant="1"]::after {
+  border-radius: 0;
+  background: #ff6846;
+}
+
+.specimenVisual[data-variant="2"] {
+  background: #4f1728;
+}
+
+.specimenVisual[data-variant="2"]::after {
+  background: #8fe0e6;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.specimenVisual > i {
+  position: absolute;
+  z-index: 2;
+  width: clamp(6rem, 13vw, 12rem);
+  height: clamp(6rem, 13vw, 12rem);
+  border: 1px solid #8fe0e6;
+  transform: rotate(calc(var(--i, 1) * 17deg));
+  mix-blend-mode: screen;
+}
+
+.specimenVisual > i:nth-child(1) {
+  transform: translate(-66%, 18%) rotate(32deg);
+}
+
+.specimenVisual > i:nth-child(2) {
+  transform: translate(72%, -28%) rotate(-18deg) scale(0.72);
+}
+
+.specimenVisual > i:nth-child(3) {
+  border-radius: 50%;
+  transform: scale(1.7);
+}
+
+.specimenVisual > span {
+  position: relative;
+  z-index: 3;
+  color: #f4f1e8;
+  font: 800 clamp(4rem, 9vw, 10rem)/1 var(--font-display);
+  letter-spacing: -0.04em;
+}
+
+.specimenVisual > small {
+  position: absolute;
+  z-index: 4;
+  right: 0.85rem;
+  bottom: 0.75rem;
+  padding: 0.38rem 0.5rem;
+  color: #f4f1e8;
+  background: #080908;
+  font: 700 0.56rem/1 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.specimenCopy {
+  display: grid;
+  grid-template-columns: 0.35fr 1fr;
+  gap: 0.8rem 2rem;
+  padding: 1.4rem 0 0;
+}
+
+.specimenCopy > span {
+  grid-row: 1 / 3;
+  font: 700 0.58rem/1.3 var(--font-mono);
+  text-transform: uppercase;
+}
+
+.specimenCopy h3 {
+  margin: 0;
+  font: 780 clamp(1.8rem, 3.3vw, 3.8rem)/0.96 var(--font-display);
+  letter-spacing: -0.04em;
+}
+
+.specimenCopy p {
+  max-width: 42rem;
+  margin: 0;
+  font-size: 0.87rem;
+  line-height: 1.65;
+}
+
+.exitSection {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  align-items: end;
+  min-height: 80dvh;
+  padding: clamp(6rem, 15vh, 11rem) var(--page-pad) 3rem;
+  background: #080908;
+}
+
+.exitSection h2 {
+  max-width: 70rem;
+  margin: 0;
+  font: 820 clamp(3.8rem, 9vw, 6rem)/0.88 var(--font-display);
+  letter-spacing: -0.04em;
+}
+
+.exitSection p {
+  max-width: 36rem;
+  margin: 2rem 0 0;
+  color: rgb(244 241 232 / 65%);
+  line-height: 1.65;
+}
+
+.exitPortal {
+  display: grid;
+  place-items: center;
+  width: clamp(11rem, 17vw, 16rem);
+  aspect-ratio: 1;
+  border: 1px solid var(--home-signal);
+  border-radius: 50%;
+  color: var(--home-signal);
+  font: 700 0.62rem/1 var(--font-mono);
+  transition: color 350ms ease, background 350ms ease, transform 450ms cubic-bezier(.16, 1, .3, 1);
+}
+
+.exitPortal i {
+  font: 400 2rem/1 var(--font-sans);
+  font-style: normal;
+}
+
+.exitPortal:hover {
+  color: #090a08;
+  background: var(--home-signal);
+  transform: rotate(-8deg) scale(1.05);
+}
+
+@keyframes orbitSpin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 1100px) {
+  .hero {
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+
+  .heroCopy {
+    padding-left: 0;
+  }
+
+  .heroCopy h1 {
+    font-size: clamp(3.7rem, 8.5vw, 6rem);
+  }
+
+  .portalField {
+    width: 58vw;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    display: block;
+    min-height: 100dvh;
+    padding: calc(var(--nav-height) + 1.8rem) 1rem max(1.25rem, env(safe-area-inset-bottom));
+  }
+
+  .hero::before {
+    inset: var(--nav-height) 1rem 1rem;
+  }
+
+  .heroCopy {
+    z-index: 6;
+    width: 68%;
+  }
+
+  .eyebrow {
+    margin-bottom: 1rem;
+    font-size: 0.53rem;
+  }
+
+  .heroCopy h1 {
+    font-size: clamp(3.15rem, 16vw, 5.4rem);
+    line-height: 0.79;
+  }
+
+  .lede {
+    max-width: 17rem;
+    margin-top: 1rem;
+    font-size: 0.76rem;
+  }
+
+  .actions {
+    gap: 0.45rem;
+    margin-top: 1rem;
+  }
+
+  .primaryAction,
+  .secondaryAction {
+    min-height: 2.75rem;
+    font-size: 0.59rem;
+  }
+
+  .primaryAction {
+    gap: 1rem;
+    min-width: 9.2rem;
+  }
+
+  .portalField {
+    --field-rotate-y: -12deg;
+    position: absolute;
+    z-index: 4;
+    top: 23%;
+    right: -4.6rem;
+    width: min(92vw, 31rem);
+    height: 68%;
+    aspect-ratio: auto;
+  }
+
+  .orbitDisc {
+    inset: 2% -4% 2% 12%;
+    transform: rotateX(72deg) rotateZ(-38deg);
+  }
+
+  .identityCore {
+    top: 46%;
+    left: 59%;
+    width: 7rem;
+  }
+
+  .portalNode {
+    left: auto;
+    right: var(--mobile-right);
+    top: var(--mobile-y);
+    min-width: 8rem;
+    min-height: 3rem;
+    transform: translateZ(var(--mobile-z)) scale(var(--node-scale));
+  }
+
+  .portalNode:hover,
+  .portalNode:focus-visible {
+    --node-scale: 1.06;
+    transform: translateX(-0.8rem) translateZ(var(--mobile-z)) scale(var(--node-scale));
+  }
+
+  .portalOrb {
+    width: 2.25rem;
+  }
+
+  .portalLabel strong {
+    font-size: 0.64rem;
+  }
+
+  .portalLabel em {
+    display: none;
+  }
+
+  .heroFacts {
+    right: 1.5rem;
+    bottom: 1.6rem;
+    left: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .heroFacts div {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .heroFacts b {
+    font-size: 1.35rem;
+  }
+
+  .heroFacts span {
+    max-width: 4.3rem;
+    font-size: 0.44rem;
+  }
+
+  .statements {
+    padding: 0 0.75rem;
+  }
+
+  .statement {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 1rem;
+    min-height: 100dvh;
+    padding: 5.5rem 1.15rem 2rem;
+  }
+
+  .statementIndex {
+    grid-row: auto;
+    font-size: 5.5rem;
+  }
+
+  .statement h2 {
+    font-size: clamp(3.05rem, 15vw, 5.7rem);
+  }
+
+  .projectSpecimen {
+    grid-template-rows: 54vh auto;
+    width: 84vw;
+    min-width: 19rem;
+  }
+
+  .specimenCopy {
+    grid-template-columns: 1fr;
+  }
+
+  .specimenCopy > span {
+    grid-row: auto;
+  }
+
+  .exitSection {
+    grid-template-columns: 1fr;
+    min-height: 80dvh;
+    padding: 7rem 1rem 2rem;
+  }
+
+  .exitSection h2 {
+    font-size: clamp(3.5rem, 17vw, 6rem);
+  }
+
+  .exitPortal {
+    justify-self: end;
+    width: 11rem;
+  }
+}
+
+@media (max-width: 390px) and (max-height: 740px) {
+  .heroCopy h1 {
+    font-size: 3rem;
+  }
+
+  .lede {
+    display: none;
+  }
+
+  .portalField {
+    top: 18%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbitDisc i,
+  .identityCore::before,
+  .portalOrb::after {
+    animation: none;
+  }
+}

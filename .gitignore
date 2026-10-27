@@ -1,0 +1,24 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# testing
+/playwright-report/
+/test-results/
+/output/
+/.playwright-cli/
+
+# local
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# typescript
+*.tsbuildinfo
+
+# generated Next declarations
+next-env.d.ts

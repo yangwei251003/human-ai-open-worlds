@@ -1,0 +1,1081 @@
+.page {
+  --ink: #11120f;
+  --paper: #ecebdc;
+  --muted: #a8aa9d;
+  --line: rgba(236, 235, 220, 0.16);
+  --signal: #ff6b4a;
+  --panel: #1b1d18;
+  position: relative;
+  min-height: 100dvh;
+  overflow: clip;
+  color: var(--paper);
+  background:
+    radial-gradient(circle at 78% 8%, rgba(255, 107, 74, 0.08), transparent 27rem),
+    linear-gradient(135deg, #11120f 0%, #171914 55%, #10110f 100%);
+  font-family: var(--font-geist-sans, "Segoe UI", "Microsoft YaHei", sans-serif);
+  isolation: isolate;
+}
+
+.page::before {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 0 48%, rgba(255, 107, 74, 0.035) 50%, transparent 52% 100%);
+  background-size: 240% 100%;
+  animation: signalSweep 12s linear infinite;
+}
+
+.blueprintGrid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.42;
+  background-image:
+    linear-gradient(rgba(236, 235, 220, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236, 235, 220, 0.045) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
+.intro,
+.workbench,
+.protocol {
+  width: min(100% - 3rem, 1400px);
+  margin-inline: auto;
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.7fr) minmax(0, 2.1fr) minmax(14rem, 0.8fr);
+  gap: clamp(1.5rem, 4vw, 5rem);
+  align-items: end;
+  min-height: min(76dvh, 52rem);
+  padding-block: clamp(8rem, 16vh, 12rem) 5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.introIndex {
+  display: grid;
+  gap: 0.55rem;
+  align-self: start;
+  padding-top: 0.6rem;
+  color: var(--muted);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: 0.68rem;
+  letter-spacing: 0.13em;
+}
+
+.introIndex span:first-child {
+  color: var(--signal);
+}
+
+.eyebrow {
+  margin: 0 0 1.4rem;
+  color: var(--signal);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: 0.72rem;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.introCopy h1 {
+  max-width: 12ch;
+  margin: 0;
+  font-size: clamp(3.2rem, 7vw, 6rem);
+  font-weight: 680;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.introCopy h1 span {
+  display: block;
+  color: var(--signal);
+}
+
+.lede {
+  max-width: 56ch;
+  margin: 2.4rem 0 0;
+  color: #c6c6b9;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.85;
+}
+
+.projectReadout {
+  display: grid;
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.projectReadout div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 1.05rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.projectReadout dt {
+  color: var(--muted);
+  font-size: 0.74rem;
+}
+
+.projectReadout dd {
+  margin: 0;
+  color: var(--paper);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: 1.15rem;
+}
+
+.workbench {
+  position: relative;
+  padding-block: clamp(5rem, 9vw, 8rem);
+}
+
+.toolbar {
+  position: relative;
+  z-index: 8;
+  display: grid;
+  grid-template-columns: minmax(11rem, 0.8fr) minmax(0, 2fr) auto;
+  gap: 1.5rem;
+  align-items: end;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.toolbar h2,
+.protocol h2 {
+  max-width: 17ch;
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 3.1rem);
+  font-weight: 620;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  justify-content: flex-end;
+}
+
+.filterButton,
+.motionToggle,
+.stageControl,
+.emptyState button,
+.inspectorTopline button,
+.inspectorFooter button {
+  min-height: 2.75rem;
+  border: 1px solid var(--line);
+  color: var(--paper);
+  background: rgba(17, 18, 15, 0.72);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.filterButton {
+  padding: 0.7rem 0.95rem;
+  font-size: 0.78rem;
+}
+
+.filterButton[data-active="true"] {
+  color: var(--ink);
+  border-color: var(--signal);
+  background: var(--signal);
+}
+
+.filterButton:active,
+.motionToggle:active,
+.stageControl:active,
+.emptyState button:active,
+.inspectorTopline button:active,
+.inspectorFooter button:active {
+  transform: scale(0.98);
+}
+
+.filterButton:focus-visible,
+.motionToggle:focus-visible,
+.stageControl:focus-visible,
+.emptyState button:focus-visible,
+.projectCard:focus-visible,
+.inspector button:focus-visible,
+.inspector a:focus-visible {
+  outline: 3px solid var(--signal);
+  outline-offset: 3px;
+}
+
+.motionToggle {
+  display: inline-flex;
+  gap: 0.55rem;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.9rem;
+  white-space: nowrap;
+  font-size: 0.74rem;
+}
+
+.motionToggle svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.resultStatus {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.stage {
+  --stage-step: clamp(14rem, 23vw, 21rem);
+  position: relative;
+  height: clamp(35rem, 67vw, 51rem);
+  min-height: 34rem;
+  margin-top: 1.5rem;
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  perspective: 1600px;
+  perspective-origin: 50% 42%;
+  touch-action: pan-y pinch-zoom;
+  contain: layout style paint;
+}
+
+.stage::before,
+.stage::after {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  bottom: 0;
+  width: 13%;
+  content: "";
+  pointer-events: none;
+}
+
+.stage::before {
+  left: 0;
+  background: linear-gradient(90deg, #141511, transparent);
+}
+
+.stage::after {
+  right: 0;
+  background: linear-gradient(-90deg, #141511, transparent);
+}
+
+.stageCoordinates {
+  position: absolute;
+  inset: 1rem 1rem auto;
+  z-index: 6;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(236, 235, 220, 0.35);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+}
+
+.stageFloor {
+  position: absolute;
+  left: 50%;
+  bottom: -12%;
+  width: 130%;
+  height: 62%;
+  transform: translateX(-50%) rotateX(67deg);
+  transform-origin: bottom;
+  background-image:
+    linear-gradient(rgba(255, 107, 74, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236, 235, 220, 0.08) 1px, transparent 1px);
+  background-size: 56px 42px;
+  mask-image: linear-gradient(to top, black, transparent 86%);
+  animation: floorTravel 10s linear infinite;
+}
+
+.projectCard {
+  position: absolute;
+  z-index: calc(10 - var(--distance));
+  top: 48%;
+  left: 50%;
+  width: clamp(18rem, 30vw, 25rem);
+  height: min(31rem, calc(100% - 6rem));
+  padding: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  appearance: none;
+  transform:
+    translate3d(
+      calc(-50% + (var(--offset) * var(--stage-step))),
+      calc(-50% + (var(--distance) * 1.35rem)),
+      calc(var(--distance) * -7rem)
+    )
+    rotateY(calc(var(--offset) * -17deg))
+    scale(calc(1 - (var(--distance) * 0.075)));
+  transform-style: preserve-3d;
+  opacity: calc(1 - (var(--distance) * 0.2));
+  cursor: pointer;
+  transition:
+    transform 680ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 520ms ease,
+    filter 520ms ease;
+}
+
+.projectCard[data-distant="true"] {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.projectCard[data-active="true"] {
+  z-index: 12;
+}
+
+.cardSurface {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  text-align: left;
+  border: 1px solid rgba(236, 235, 220, 0.22);
+  border-top-color: rgba(236, 235, 220, 0.55);
+  background: linear-gradient(145deg, rgba(37, 39, 33, 0.98), rgba(22, 23, 20, 0.98));
+  box-shadow: 0 2.2rem 5rem rgba(0, 0, 0, 0.32);
+  transform: translateZ(0);
+}
+
+.cardSurface::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(120deg, transparent 35%, rgba(236, 235, 220, 0.08), transparent 65%);
+  transform: translateX(-70%);
+  transition:
+    opacity 250ms ease,
+    transform 780ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.projectCard:hover .cardSurface::after,
+.projectCard:focus-visible .cardSurface::after {
+  opacity: 1;
+  transform: translateX(70%);
+}
+
+.projectCard[data-active="true"] .cardSurface {
+  border-top: 4px solid var(--signal);
+}
+
+.cardRail {
+  display: block;
+  padding: 0.75rem 0.9rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: 0.58rem;
+  letter-spacing: 0.09em;
+}
+
+.cardMeta,
+.cardFooter {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  color: var(--muted);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+}
+
+.cardMeta b {
+  color: var(--signal);
+}
+
+.cardMeta span:nth-child(2) {
+  text-align: center;
+}
+
+.assetStage {
+  position: relative;
+  display: grid;
+  min-height: 11rem;
+  place-items: center;
+  margin-inline: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #20221c;
+}
+
+.assetGrid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.38;
+  background-image:
+    linear-gradient(rgba(236, 235, 220, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236, 235, 220, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+  transform: perspective(240px) rotateX(20deg) scale(1.2);
+}
+
+.assetGlyph {
+  position: relative;
+  z-index: 1;
+  color: var(--paper);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  opacity: 0.75;
+}
+
+.assetStage small {
+  position: absolute;
+  z-index: 1;
+  right: 0.6rem;
+  bottom: 0.5rem;
+  color: var(--signal);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: 0.54rem;
+  text-align: right;
+}
+
+.assetStage small em {
+  display: block;
+  margin-top: 0.18rem;
+  color: var(--muted);
+  font-style: normal;
+}
+
+.cardTitle {
+  display: block;
+  padding: 1.15rem 1rem 0;
+  color: var(--paper);
+  font-size: clamp(1.25rem, 2vw, 1.7rem);
+  font-weight: 650;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.cardSummary {
+  display: -webkit-box;
+  flex: 1;
+  overflow: hidden;
+  padding: 0.8rem 1rem 1rem;
+  color: #b9baae;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.cardFooter {
+  grid-template-columns: auto 1fr;
+  border-top: 1px solid var(--line);
+}
+
+.inspectCall {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+  justify-content: flex-end;
+  color: var(--paper);
+}
+
+.inspectCall svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.stageControl {
+  position: absolute;
+  z-index: 20;
+  top: 50%;
+  display: grid;
+  width: 3rem;
+  min-height: 3rem;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.stageControl:hover {
+  color: var(--ink);
+  border-color: var(--signal);
+  background: var(--signal);
+}
+
+.stageControl:active {
+  transform: translateY(-50%) scale(0.96);
+}
+
+.stageControlPrevious {
+  left: 1rem;
+}
+
+.stageControlNext {
+  right: 1rem;
+}
+
+.focusReadout {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding-top: 1rem;
+  color: var(--muted);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: 0.68rem;
+}
+
+.focusReadout strong {
+  color: var(--signal);
+  font-size: 0.8rem;
+}
+
+.emptyState {
+  display: grid;
+  min-height: 30rem;
+  place-items: center;
+  align-content: center;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  border: 1px dashed rgba(236, 235, 220, 0.26);
+  text-align: center;
+}
+
+.emptyState svg {
+  width: 2rem;
+  height: 2rem;
+  color: var(--signal);
+}
+
+.emptyState h3,
+.emptyState p {
+  margin: 0;
+}
+
+.emptyState p {
+  color: var(--muted);
+}
+
+.emptyState button {
+  margin-top: 0.7rem;
+  padding-inline: 1rem;
+}
+
+.protocol {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.7fr);
+  gap: clamp(2rem, 7vw, 8rem);
+  padding-block: 3rem clamp(7rem, 12vw, 12rem);
+}
+
+.protocol ol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.protocol li {
+  display: grid;
+  grid-template-columns: 3rem minmax(8rem, 0.65fr) minmax(0, 1.4fr);
+  gap: 1rem;
+  align-items: baseline;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.protocol li > span {
+  color: var(--signal);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: 0.72rem;
+}
+
+.protocol li p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.inspectorBackdrop {
+  position: fixed;
+  z-index: 120;
+  inset: 0;
+  display: grid;
+  padding: clamp(0.75rem, 2.5vw, 2rem);
+  place-items: end;
+  overflow: hidden;
+  background: rgba(11, 12, 10, 0.76);
+  backdrop-filter: blur(12px);
+  animation: backdropIn 260ms ease both;
+}
+
+.inspector {
+  width: min(100%, 80rem);
+  max-height: calc(100dvh - clamp(1.5rem, 5vw, 4rem));
+  overflow: auto;
+  overscroll-behavior: contain;
+  color: var(--paper);
+  border: 1px solid rgba(236, 235, 220, 0.28);
+  border-top: 4px solid var(--signal);
+  background: #171813;
+  box-shadow: 0 2rem 7rem rgba(0, 0, 0, 0.5);
+  animation: inspectorIn 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.inspectorTopline {
+  position: sticky;
+  z-index: 3;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 0.8rem 0.7rem 1.2rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  background: rgba(23, 24, 19, 0.94);
+  backdrop-filter: blur(14px);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.09em;
+}
+
+.inspectorTopline button {
+  display: grid;
+  width: 2.75rem;
+  padding: 0;
+  place-items: center;
+}
+
+.inspectorTopline svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.inspectorHero {
+  display: grid;
+  grid-template-columns: minmax(17rem, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  padding: clamp(1.4rem, 4vw, 4rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.inspectorAsset {
+  position: relative;
+  display: grid;
+  min-height: 20rem;
+  align-content: space-between;
+  overflow: hidden;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(rgba(236, 235, 220, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236, 235, 220, 0.07) 1px, transparent 1px),
+    #20221c;
+  background-size: 28px 28px;
+}
+
+.inspectorAsset strong {
+  align-self: center;
+  justify-self: center;
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: clamp(4.5rem, 11vw, 9rem);
+  letter-spacing: -0.04em;
+  opacity: 0.7;
+}
+
+.inspectorAsset span,
+.inspectorAsset small,
+.inspectorHero > div > p:first-child {
+  color: var(--signal);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: 0.67rem;
+  letter-spacing: 0.07em;
+}
+
+.inspectorHero h2 {
+  max-width: 12ch;
+  margin: 0.8rem 0 1.2rem;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+}
+
+.inspectorHero > div > p:not(:first-child) {
+  max-width: 58ch;
+  color: #c5c5b9;
+  line-height: 1.8;
+}
+
+.inspectorLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.inspectorLinks a,
+.inspectorLinks span {
+  display: inline-flex;
+  min-height: 2.75rem;
+  gap: 0.45rem;
+  align-items: center;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+
+.inspectorLinks span {
+  color: var(--muted);
+}
+
+.inspectorLinks svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.evidenceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom: 1px solid var(--line);
+}
+
+.evidenceGrid article {
+  min-height: 16rem;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.evidenceGrid article:nth-child(even) {
+  border-right: 0;
+}
+
+.evidenceGrid article > span {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  color: var(--signal);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: 0.66rem;
+}
+
+.evidenceGrid article svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.evidenceGrid h3 {
+  margin: 2.2rem 0 0.8rem;
+  font-size: 1.35rem;
+}
+
+.evidenceGrid p,
+.evidenceGrid blockquote {
+  margin: 0;
+  color: #b9baae;
+  line-height: 1.75;
+}
+
+.evidenceGrid blockquote {
+  margin-top: 1rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--signal);
+}
+
+.inspectorFooter {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 2rem;
+  align-items: end;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.inspectorFooter > div > span {
+  color: var(--muted);
+  font-family: var(--font-geist-mono, "Cascadia Code", Consolas, monospace);
+  font-size: 0.65rem;
+}
+
+.inspectorFooter ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.inspectorFooter li {
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--line);
+  color: #c5c5b9;
+  font-size: 0.72rem;
+}
+
+.inspectorFooter button {
+  padding-inline: 1.3rem;
+  border-color: var(--signal);
+  background: var(--signal);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.motionPaused *,
+.motionPaused *::before,
+.motionPaused *::after {
+  animation-play-state: paused !important;
+}
+
+.reduceMotion::before,
+.reduceMotion .stageFloor,
+.reduceMotion .cardSurface::after {
+  animation: none;
+}
+
+.reduceMotion .projectCard,
+.reduceMotion .cardSurface::after,
+.reduceMotion .filterButton,
+.reduceMotion .motionToggle,
+.reduceMotion .stageControl,
+.reduceMotion .inspectorBackdrop,
+.reduceMotion .inspector {
+  transition: none;
+  animation: none;
+}
+
+@keyframes signalSweep {
+  to { background-position: -240% 0; }
+}
+
+@keyframes floorTravel {
+  to { background-position: 0 42px, 56px 0; }
+}
+
+@keyframes backdropIn {
+  from { opacity: 0; }
+}
+
+@keyframes inspectorIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8rem, 0) rotateX(-4deg);
+  }
+}
+
+@media (max-width: 960px) {
+  .intro {
+    grid-template-columns: 8rem minmax(0, 1fr);
+  }
+
+  .projectReadout {
+    grid-column: 2;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .projectReadout div {
+    display: block;
+    padding-right: 1rem;
+  }
+
+  .projectReadout dd {
+    margin-top: 0.45rem;
+  }
+
+  .toolbar {
+    grid-template-columns: 1fr auto;
+  }
+
+  .filters {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: flex-start;
+  }
+
+  .motionToggle {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .protocol {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .intro,
+  .workbench,
+  .protocol {
+    width: min(100% - 1.5rem, 1400px);
+  }
+
+  .intro {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    min-height: 100dvh;
+    padding-block: 7rem 3rem;
+  }
+
+  .introIndex,
+  .projectReadout {
+    grid-column: 1;
+  }
+
+  .introCopy h1 {
+    font-size: clamp(3rem, 15vw, 5rem);
+  }
+
+  .projectReadout {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .projectReadout div {
+    min-width: 0;
+  }
+
+  .projectReadout dd {
+    overflow-wrap: anywhere;
+    font-size: 0.85rem;
+  }
+
+  .toolbar {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .filters {
+    grid-column: 1;
+    grid-row: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 0.4rem;
+    scrollbar-width: thin;
+  }
+
+  .filterButton {
+    flex: 0 0 auto;
+  }
+
+  .motionToggle {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+  }
+
+  .stage {
+    --stage-step: 72vw;
+    height: min(74dvh, 41rem);
+    min-height: 35rem;
+    perspective: 980px;
+    perspective-origin: 50% 48%;
+  }
+
+  .projectCard {
+    top: 49%;
+    width: min(76vw, 21rem);
+    height: min(29rem, calc(100% - 5rem));
+    transform:
+      translate3d(
+        calc(-50% + (var(--offset) * var(--stage-step))),
+        calc(-50% + (var(--distance) * 0.8rem)),
+        calc(var(--distance) * -4.5rem)
+      )
+      rotateY(calc(var(--offset) * -23deg))
+      scale(calc(1 - (var(--distance) * 0.065)));
+  }
+
+  .assetStage {
+    min-height: 9.5rem;
+  }
+
+  .stageControl {
+    top: auto;
+    bottom: 0.9rem;
+    transform: none;
+  }
+
+  .stageControl:active {
+    transform: scale(0.96);
+  }
+
+  .protocol li {
+    grid-template-columns: 2.2rem 1fr;
+  }
+
+  .protocol li p {
+    grid-column: 2;
+  }
+
+  .inspectorBackdrop {
+    padding: 0;
+    place-items: stretch;
+  }
+
+  .inspector {
+    width: 100%;
+    max-height: 100dvh;
+    border-inline: 0;
+    border-bottom: 0;
+  }
+
+  .inspectorHero,
+  .evidenceGrid,
+  .inspectorFooter {
+    grid-template-columns: 1fr;
+  }
+
+  .inspectorAsset {
+    min-height: 15rem;
+  }
+
+  .evidenceGrid article,
+  .evidenceGrid article:nth-child(even) {
+    min-height: 0;
+    border-right: 0;
+  }
+
+  .inspectorFooter {
+    align-items: stretch;
+  }
+
+  .inspectorFooter button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page::before,
+  .stageFloor,
+  .cardSurface::after {
+    animation: none;
+  }
+
+  .projectCard,
+  .cardSurface::after,
+  .filterButton,
+  .motionToggle,
+  .stageControl,
+  .inspectorBackdrop,
+  .inspector {
+    transition: none;
+    animation: none;
+  }
+}

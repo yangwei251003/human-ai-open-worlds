@@ -1,0 +1,722 @@
+.vault {
+  --museum-ink: #191712;
+  --museum-paper: #ded8c8;
+  --museum-stone: #918978;
+  --museum-brass: #bd9a55;
+  --brand-signal: #ff6b4a;
+  position: relative;
+  min-height: 100dvh;
+  overflow: clip;
+  padding: clamp(6.5rem, 9vw, 9rem) clamp(1rem, 4vw, 4rem) 4rem;
+  color: var(--museum-paper);
+  background:
+    radial-gradient(circle at 50% 34%, rgba(189, 154, 85, 0.14), transparent 25rem),
+    linear-gradient(115deg, #14130f 0%, #222019 48%, #11110e 100%);
+  isolation: isolate;
+  touch-action: pan-y pinch-zoom;
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.17;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 18% 23%, rgba(255, 255, 255, 0.08) 0 0.7px, transparent 1px),
+    radial-gradient(circle at 71% 64%, rgba(0, 0, 0, 0.22) 0 0.8px, transparent 1.2px);
+  background-size: 7px 9px, 11px 13px;
+  mix-blend-mode: soft-light;
+}
+
+.ceilingLines {
+  position: absolute;
+  inset: 0 8% auto;
+  z-index: -1;
+  height: 38rem;
+  perspective: 600px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ceilingLines span {
+  position: absolute;
+  top: -4rem;
+  left: 50%;
+  width: 1px;
+  height: 44rem;
+  background: linear-gradient(rgba(222, 216, 200, 0.22), transparent 76%);
+  transform-origin: top;
+}
+
+.ceilingLines span:nth-child(1) { transform: rotate(54deg); }
+.ceilingLines span:nth-child(2) { transform: rotate(27deg); }
+.ceilingLines span:nth-child(3) { transform: rotate(-27deg); }
+.ceilingLines span:nth-child(4) { transform: rotate(-54deg); }
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(16rem, 0.65fr);
+  gap: clamp(2rem, 7vw, 8rem);
+  align-items: end;
+  width: min(100%, 92rem);
+  margin: 0 auto;
+}
+
+.eyebrow,
+.sectionHeading,
+.detailKicker,
+.detailHeader,
+.archiveStrip,
+.motionToggle {
+  font-family: var(--font-mono, "SFMono-Regular", Consolas, monospace);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin: 0 0 1.2rem;
+  color: var(--museum-brass);
+  font-size: 0.72rem;
+}
+
+.intro h1 {
+  max-width: 15ch;
+  margin: 0;
+  font-size: clamp(2.8rem, 6.7vw, 6rem);
+  font-weight: 430;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+
+.intro h1 span {
+  display: block;
+  color: #9f9888;
+}
+
+.introNote {
+  padding-left: 1.25rem;
+  border-left: 1px solid rgba(222, 216, 200, 0.28);
+}
+
+.introNote p {
+  max-width: 34ch;
+  margin: 0 0 1.4rem;
+  color: #b9b2a2;
+  font-size: 0.96rem;
+  line-height: 1.8;
+}
+
+.motionToggle,
+.hallControls button,
+.detailHeader button,
+.detailNavigation button {
+  min-height: 44px;
+  padding: 0.7rem 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+
+.motionToggle {
+  border-bottom: 1px solid var(--museum-brass);
+  color: var(--museum-paper);
+  font-size: 0.66rem;
+}
+
+.museum {
+  position: relative;
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  grid-template-rows: auto minmax(34rem, 66dvh);
+  width: min(100%, 100rem);
+  margin: clamp(4rem, 9vw, 8rem) auto 0;
+}
+
+.sectionHeading {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-top: 1px solid rgba(222, 216, 200, 0.28);
+  color: #a69e8d;
+  font-size: 0.68rem;
+}
+
+.sectionHeading p { margin: 0; }
+
+.sectionHeading output { color: var(--museum-brass); }
+
+.elevator {
+  position: relative;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.1rem;
+  padding-right: 1.3rem;
+}
+
+.elevatorTrack {
+  position: absolute;
+  top: 16%;
+  right: 0.55rem;
+  bottom: 16%;
+  width: 1px;
+  background: rgba(222, 216, 200, 0.22);
+}
+
+.elevator button {
+  position: relative;
+  display: grid;
+  gap: 0.18rem;
+  min-height: 44px;
+  padding: 0.35rem 1rem 0.35rem 0;
+  border: 0;
+  color: #777163;
+  text-align: right;
+  background: transparent;
+  cursor: pointer;
+  transition: color 300ms ease, transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.elevator button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0.25rem;
+  width: 0.62rem;
+  height: 0.62rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: #1b1a15;
+  transform: translate(50%, -50%);
+}
+
+.elevator button span { font-size: 0.64rem; }
+.elevator button strong { font-size: 0.72rem; letter-spacing: 0.09em; }
+
+.elevator .floorActive {
+  color: var(--museum-brass);
+  transform: translateX(-0.35rem);
+}
+
+.elevator .floorActive::after {
+  background: var(--brand-signal);
+  border-color: var(--brand-signal);
+}
+
+.hallway {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-inline: 1px solid rgba(222, 216, 200, 0.12);
+  border-bottom: 1px solid rgba(222, 216, 200, 0.12);
+  perspective: 1300px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.24), transparent 15% 85%, rgba(0, 0, 0, 0.24)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(0, 0, 0, 0.18));
+}
+
+.hallway::before,
+.hallway::after {
+  content: "";
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(222, 216, 200, 0.27), transparent);
+  transform-origin: center;
+}
+
+.hallway::before { top: 17%; transform: perspective(300px) rotateX(-54deg); }
+.hallway::after { bottom: 16%; transform: perspective(300px) rotateX(54deg); }
+
+.vaultDoor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(70%, 46rem);
+  aspect-ratio: 1.7;
+  border: 1px solid rgba(222, 216, 200, 0.08);
+  transform: translate(-50%, -50%) translateZ(-620px) scale(1.8);
+}
+
+.vaultDoor span {
+  position: absolute;
+  inset: 9%;
+  border: 1px solid rgba(222, 216, 200, 0.08);
+}
+
+.vaultDoor span:nth-child(2) { inset: 21%; }
+.vaultDoor span:nth-child(3) { inset: 36%; }
+
+.spotlight {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  width: min(45vw, 35rem);
+  height: 84%;
+  pointer-events: none;
+  opacity: 0.58;
+  background: linear-gradient(172deg, rgba(226, 199, 137, 0.25), transparent 70%);
+  clip-path: polygon(47% 0, 53% 0, 92% 100%, 8% 100%);
+  transform: translateX(-50%);
+  filter: blur(12px);
+  animation: spotlightBreathe 6s ease-in-out infinite alternate;
+}
+
+.exhibits {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  transform-style: preserve-3d;
+}
+
+.exhibit {
+  position: absolute;
+  top: 47%;
+  left: 50%;
+  width: clamp(16rem, 31vw, 30rem);
+  opacity: var(--exhibit-opacity);
+  transform:
+    translate3d(calc(-50% + var(--exhibit-x)), -50%, var(--exhibit-z))
+    rotateY(var(--exhibit-turn))
+    scale(var(--exhibit-scale));
+  transform-style: preserve-3d;
+  transition:
+    transform 760ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 540ms ease,
+    filter 540ms ease;
+  filter: saturate(0.55) brightness(0.7);
+}
+
+.exhibitActive {
+  filter: saturate(1) brightness(1);
+}
+
+.exhibit > button {
+  display: grid;
+  width: 100%;
+  min-height: 26rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(222, 216, 200, 0.27);
+  color: inherit;
+  text-align: left;
+  background: linear-gradient(145deg, #39362d, #171612 62%);
+  box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.42);
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1), border-color 280ms ease;
+}
+
+.exhibit > button:hover,
+.exhibit > button:focus-visible {
+  border-color: var(--museum-brass);
+  transform: translateZ(18px) scale(1.015);
+}
+
+.frameCorners {
+  position: absolute;
+  inset: 0.58rem;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--museum-brass), var(--museum-brass)) left top / 2rem 1px no-repeat,
+    linear-gradient(var(--museum-brass), var(--museum-brass)) left top / 1px 2rem no-repeat,
+    linear-gradient(var(--museum-brass), var(--museum-brass)) right top / 2rem 1px no-repeat,
+    linear-gradient(var(--museum-brass), var(--museum-brass)) right top / 1px 2rem no-repeat,
+    linear-gradient(var(--museum-brass), var(--museum-brass)) left bottom / 2rem 1px no-repeat,
+    linear-gradient(var(--museum-brass), var(--museum-brass)) left bottom / 1px 2rem no-repeat,
+    linear-gradient(var(--museum-brass), var(--museum-brass)) right bottom / 2rem 1px no-repeat,
+    linear-gradient(var(--museum-brass), var(--museum-brass)) right bottom / 1px 2rem no-repeat;
+}
+
+.certificate {
+  position: relative;
+  display: grid;
+  place-content: center;
+  gap: 0.7rem;
+  min-height: 17rem;
+  padding: 1.4rem;
+  overflow: hidden;
+  color: #28251f;
+  text-align: center;
+  background:
+    radial-gradient(circle at center, transparent 0 33%, rgba(82, 65, 38, 0.06) 34% 35%, transparent 36%),
+    #cfc7b3;
+  box-shadow: inset 0 0 0 1px rgba(36, 31, 23, 0.25);
+  transform: translateZ(24px);
+}
+
+.certificate::before {
+  content: "ARCHIVE / HONOR / EVIDENCE";
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.48rem;
+  letter-spacing: 0.16em;
+}
+
+.certificateSeal {
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0 auto;
+  border: 1px solid #6b5734;
+  border-radius: 50%;
+  color: #6b5734;
+  font: 700 0.75rem/1 var(--font-mono, monospace);
+}
+
+.certificateRule {
+  width: 4rem;
+  height: 1px;
+  margin: 0 auto;
+  background: #6b5734;
+}
+
+.certificate b {
+  max-width: 21ch;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 550;
+}
+
+.certificate small { font-size: 0.72rem; }
+
+.certificate i {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.8rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.48rem;
+  font-style: normal;
+  letter-spacing: 0.05em;
+}
+
+.exhibitLabel {
+  display: grid;
+  gap: 0.4rem;
+  align-content: end;
+  padding: 1.15rem 0.45rem 0.15rem;
+}
+
+.exhibitLabel span,
+.exhibitLabel small {
+  color: #a69e8d;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.62rem;
+  letter-spacing: 0.07em;
+}
+
+.exhibitLabel strong {
+  font-size: clamp(1rem, 1.7vw, 1.35rem);
+  font-weight: 500;
+}
+
+.hallControls {
+  position: absolute;
+  right: 1.4rem;
+  bottom: 1rem;
+  left: 1.4rem;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+}
+
+.hallControls span { height: 1px; background: rgba(222, 216, 200, 0.22); }
+
+.hallControls button {
+  min-width: 44px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+}
+
+.archiveStrip {
+  display: grid;
+  grid-template-columns: auto minmax(10rem, 1fr) auto minmax(15rem, 1.4fr);
+  gap: 1.5rem;
+  width: min(100%, 92rem);
+  margin: 3rem auto 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(222, 216, 200, 0.2);
+  color: #817b6d;
+  font-size: 0.62rem;
+}
+
+.archiveStrip p,
+.archiveStrip strong { margin: 0; }
+.archiveStrip strong { color: #c3bcad; font-weight: 500; }
+
+.detailDialog {
+  width: min(calc(100% - 2rem), 76rem);
+  max-height: min(90dvh, 58rem);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 1px solid rgba(210, 188, 139, 0.45);
+  color: #ded8c8;
+  background: #171612;
+  box-shadow: 0 2rem 8rem rgba(0, 0, 0, 0.68);
+}
+
+.detailDialog::backdrop {
+  background: rgba(8, 8, 7, 0.78);
+  backdrop-filter: blur(12px);
+}
+
+.detailPanel {
+  position: relative;
+  padding: clamp(1rem, 3vw, 2rem);
+  overflow: hidden;
+}
+
+.detailPanel::before {
+  content: "";
+  position: absolute;
+  inset: -40% 25% auto;
+  height: 32rem;
+  pointer-events: none;
+  background: linear-gradient(175deg, rgba(189, 154, 85, 0.2), transparent 70%);
+  clip-path: polygon(45% 0, 55% 0, 100% 100%, 0 100%);
+}
+
+.detailHeader {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(222, 216, 200, 0.2);
+  color: #a69e8d;
+  font-size: 0.64rem;
+}
+
+.detailHeader p { margin: 0; }
+.detailHeader button { padding-inline: 0.75rem; font: inherit; }
+
+.detailGrid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(17rem, 0.8fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  padding: clamp(2rem, 6vw, 5rem) 0 3rem;
+}
+
+.detailCertificate {
+  display: grid;
+  place-content: center;
+  align-self: start;
+  min-height: min(56vw, 31rem);
+  padding: 2rem;
+  border: 0.8rem solid #302d25;
+  outline: 1px solid rgba(222, 216, 200, 0.25);
+  color: #28251f;
+  text-align: center;
+  background: #d4cdbb;
+  box-shadow: 1.5rem 2rem 4rem rgba(0, 0, 0, 0.38);
+  transform: perspective(900px) rotateY(5deg) rotateX(2deg);
+}
+
+.detailCertificate span,
+.detailCertificate small {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+}
+
+.detailCertificate strong {
+  max-width: 18ch;
+  margin: 1.4rem auto 0;
+  font-size: clamp(1.4rem, 3vw, 2.7rem);
+  line-height: 1.05;
+}
+
+.detailCertificate p { margin: 1rem 0 2rem; font-size: 0.85rem; }
+
+.detailCopy { align-self: center; }
+
+.detailKicker { margin: 0 0 1rem; color: var(--museum-brass); font-size: 0.65rem; }
+
+.detailCopy h2 {
+  max-width: 13ch;
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 4.8rem);
+  font-weight: 450;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+}
+
+.detailCopy dl { margin: 2rem 0; border-top: 1px solid rgba(222, 216, 200, 0.18); }
+
+.detailCopy dl div {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(222, 216, 200, 0.12);
+}
+
+.detailCopy dt { color: #8d8678; font-size: 0.72rem; }
+.detailCopy dd { margin: 0; line-height: 1.6; }
+
+.detailCopy section { margin-top: 1.5rem; }
+.detailCopy h3 { margin: 0 0 0.4rem; color: #a69e8d; font-size: 0.72rem; font-weight: 500; }
+.detailCopy section p { margin: 0; color: #c7c0b2; line-height: 1.75; }
+
+.detailCopy footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.detailCopy footer a,
+.detailCopy footer span {
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(222, 216, 200, 0.25);
+  color: #ded8c8;
+  font-size: 0.72rem;
+  text-decoration: none;
+}
+
+.detailCopy footer span { color: #8d8678; }
+
+.detailNavigation {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  border-top: 1px solid rgba(222, 216, 200, 0.2);
+}
+
+.detailNavigation button { font-family: var(--font-mono, monospace); font-size: 0.7rem; }
+.detailNavigation button:first-child { text-align: left; }
+.detailNavigation button:last-child { text-align: right; }
+.detailNavigation span { color: #827b6d; font: 0.62rem var(--font-mono, monospace); }
+
+.motionPaused *,
+.motionPaused *::before,
+.motionPaused *::after {
+  animation-play-state: paused !important;
+}
+
+.emptyVault {
+  display: grid;
+  place-content: center;
+  min-height: 100dvh;
+  padding: 6rem 1rem;
+  color: #ded8c8;
+  background: #191712;
+}
+
+.emptyVault h1 { max-width: 16ch; font-size: clamp(2.4rem, 7vw, 5.5rem); }
+.emptyVault > p:last-child { max-width: 55ch; color: #a69e8d; line-height: 1.8; }
+
+.vault button:focus-visible,
+.vault a:focus-visible,
+.detailDialog button:focus-visible,
+.detailDialog a:focus-visible {
+  outline: 2px solid var(--brand-signal);
+  outline-offset: 4px;
+}
+
+@keyframes spotlightBreathe {
+  from { opacity: 0.4; transform: translateX(-50%) scaleX(0.92); }
+  to { opacity: 0.68; transform: translateX(-50%) scaleX(1.08); }
+}
+
+@media (max-width: 760px) {
+  .vault { padding-inline: 1rem; }
+
+  .intro { grid-template-columns: 1fr; gap: 1.8rem; }
+  .intro h1 { font-size: clamp(2.8rem, 14vw, 5rem); }
+  .introNote { max-width: 31rem; }
+
+  .museum {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto minmax(40rem, 78dvh);
+    margin-top: 4rem;
+  }
+
+  .elevator {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    padding: 0.5rem 0 1rem;
+    scrollbar-width: thin;
+  }
+
+  .elevatorTrack { top: auto; right: 0; bottom: 0.55rem; left: 0; width: auto; height: 1px; }
+
+  .elevator button {
+    flex: 0 0 7rem;
+    padding: 0.4rem 0.8rem 0.8rem;
+    text-align: left;
+  }
+
+  .elevator button::after { top: auto; right: auto; bottom: -0.49rem; left: 0.8rem; transform: none; }
+  .elevator .floorActive { transform: translateY(-0.2rem); }
+
+  .hallway { border-top: 1px solid rgba(222, 216, 200, 0.12); }
+
+  .exhibit {
+    top: 45%;
+    width: min(84vw, 25rem);
+    transform:
+      translate3d(-50%, calc(-50% + var(--exhibit-y)), var(--exhibit-z))
+      rotateX(var(--exhibit-tilt))
+      scale(var(--exhibit-scale));
+  }
+
+  .exhibit > button { min-height: 27rem; }
+  .certificate { min-height: 17.5rem; }
+  .spotlight { width: 92vw; height: 76%; }
+
+  .archiveStrip {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .archiveStrip p { margin-top: 0.9rem; }
+
+  .detailGrid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .detailCertificate { min-height: 26rem; transform: perspective(900px) rotateX(2deg); }
+  .detailCopy h2 { font-size: clamp(2.3rem, 12vw, 4rem); }
+}
+
+@media (max-width: 430px) {
+  .museum { grid-template-rows: auto auto minmax(37rem, 75dvh); }
+  .hallControls { right: 0.8rem; left: 0.8rem; gap: 0.5rem; }
+  .hallControls button { font-size: 0.58rem; }
+  .detailDialog { width: calc(100% - 1rem); max-height: calc(100dvh - 1rem); }
+  .detailCopy dl div { grid-template-columns: 1fr; gap: 0.3rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vault *,
+  .vault *::before,
+  .vault *::after,
+  .detailDialog *,
+  .detailDialog *::before,
+  .detailDialog *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .spotlight { opacity: 0.42; }
+}
